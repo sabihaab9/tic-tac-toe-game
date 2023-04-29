@@ -1,0 +1,60 @@
+/* set up basic box sizing for EVERYTHING*/
+*,*::after, *::before{
+    box-sizing: border-box;
+}
+
+:root{
+    /* declare css variable: cell-size */
+    --cell-size: 100px;
+    --mark-size: cal(var(--cell-size)*.9)
+}
+
+
+
+/* get rid of all margins so it will be easier
+to add the black background*/
+body{
+    margin: 0;
+}
+
+.board{
+/* board fills entire screen */
+    width: 100vw;
+    height: 100vh;
+    /* to center board */
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    grid-template-columns: repeat(3,auto);
+}
+
+.cell{
+    width: var(--cell-size);
+    height: var(--cell-size);
+    /* background-color: black; */
+    border: 1px solid black;
+}
+
+/* remove grid from the top (the first 3 elements) */
+.cell:first-child, 
+.cell:nth-child(2), 
+.cell:nth-child(3){
+    border-top: none;
+}
+
+/* remove grid from left side  */
+.cell:nth-child(3n+1){
+    border-left: none;
+}
+
+.cell:nth-child(3n+3){
+    border-right: none;
+}
+
+.cell:last-child, 
+.cell:nth-child(8), 
+.cell:nth-child(7){
+    border-bottom: none;
+}
