@@ -3,19 +3,20 @@
     box-sizing: border-box;
 }
 
+/* use root to declare global CSS variables, cell-size, mark-size */
+/* :root represents the <html> element */
 :root{
-    /* declare css variable: cell-size */
     --cell-size: 100px;
-    --mark-size: cal(var(--cell-size)*.9)
+    --mark-size: calc(var(--cell-size)*.9)
 }
-
-
 
 /* get rid of all margins so it will be easier
 to add the black background*/
 body{
     margin: 0;
 }
+
+/* part 1: creating a grid  */
 
 .board{
 /* board fills entire screen */
@@ -35,6 +36,10 @@ body{
     height: var(--cell-size);
     /* background-color: black; */
     border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 
 /* remove grid from the top (the first 3 elements) */
@@ -44,17 +49,77 @@ body{
     border-top: none;
 }
 
-/* remove grid from left side  */
+/*remove grid from left side */
 .cell:nth-child(3n+1){
     border-left: none;
 }
 
+/* remove grid from right side */
 .cell:nth-child(3n+3){
     border-right: none;
 }
 
+/* remove grid from the bottom (the last 3 elements) */
 .cell:last-child, 
 .cell:nth-child(8), 
 .cell:nth-child(7){
     border-bottom: none;
 }
+
+
+/* part 2: creating the X and O markers */
+
+/* not-allowed symbol when cell already has an X or O */
+.cell.x, .cell.circle{
+    cursor: not-allowed;
+}
+
+/* use CSS to create the X-shape for us*/
+
+/*use pseudo-elements to make the 'X'  */
+.cell.x::before, .cell.x::after{
+  content: '';
+  /* so cells can have the same base  */
+  position: absolute;
+  /* we want width to be 15% of our height */
+  width: calc(var(--mark-size)*.15);
+  height: var(--mark-size);
+  background-color: black;
+}
+
+.cell.x::before{
+    transform: rotate(45deg);
+}
+
+.cell.x::after{
+    transform:rotate(135deg);
+}
+
+
+/* use CSS to create the O-shape for us*/
+/*use pseudo-elements to make the 'O'  */
+
+.cell.circle::before,
+.cell.circle::after{
+    content: '';
+    position: absolute;
+    /* make it a circle */
+    border-radius: 50%;
+}
+
+  /* make the before and after element two separate circles */
+
+/* larger circle */
+.cell.circle::before{
+    width: var(--mark-size);
+    height: var(--mark-size);
+    background-color: black;
+}
+
+/* smaller circle */
+.cell.circle::after{
+    width: calc(var(--mark-size)* .7);
+    height: calc(var(--mark-size)* .7);
+    background-color: white;
+}
+
