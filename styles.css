@@ -16,7 +16,7 @@ body{
     margin: 0;
 }
 
-/* part 1: creating a grid  */
+/*----- Part 1: creating a grid ------*/
 
 .board{
 /* board fills entire screen */
@@ -67,32 +67,56 @@ body{
 }
 
 
-/* part 2: creating the X and O markers */
+/* ----Part 2: creating the X and O markers ------*/
 
 /* not-allowed symbol when cell already has an X or O */
 .cell.x, .cell.circle{
     cursor: not-allowed;
 }
 
+/*----- Part 3: add hover effects to our cells using .board ...-----*/
+
+/* select our board when it has the X class applied to it */
+/*:hover is a CSS selector */
+
+/* .board.x .cell:hover{
+
+} */
+
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after{
+    background-color: lightgrey;
+}
+
+.cell.x::before,
+.cell.x::after{
+    background-color: black;
+}
 /* use CSS to create the X-shape for us*/
 
 /*use pseudo-elements to make the 'X'  */
-.cell.x::before, .cell.x::after{
+
+/*use :not() selector so that hover effect works only when it is NOT X or O*/
+.cell.x::before,
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::before, 
+.board.x .cell:not(.x):not(.circle):hover::after{
   content: '';
   /* so cells can have the same base  */
   position: absolute;
   /* we want width to be 15% of our height */
   width: calc(var(--mark-size)*.15);
   height: var(--mark-size);
-  background-color: black;
 }
 
-.cell.x::before{
+.cell.x::before, 
+.board.x .cell:not(.x):not(.circle):hover::before{
     transform: rotate(45deg);
 }
 
-.cell.x::after{
-    transform:rotate(135deg);
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::after{
+    transform:rotate(-45deg);
 }
 
 
